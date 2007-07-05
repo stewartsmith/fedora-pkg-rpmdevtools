@@ -1,28 +1,42 @@
 %define emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
 %define xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
-%define spectool_version   1.0.8
+%define spectool_version   1.0.9
 
 Name:           rpmdevtools
-Version:        5.3
+Version:        6.0
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
 License:        GPL
-URL:            http://fedora.redhat.com/
+URL:            http://fedoraproject.org/
 Source0:        %{name}-%{version}.tar.bz2
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 Provides:       spectool = %{spectool_version}
-Provides:       fedora-rpmdevtools = %{version}
 Obsoletes:      fedora-rpmdevtools < 5.0
 # Required for tool operations
-Requires:       rpm-python, python, cpio, sed, perl, wget, file
+Requires:       rpm-python
+Requires:       python
+Requires:       cpio
+Requires:       sed
+Requires:       perl
+Requires:       wget
+Requires:       file
+Requires:       fakeroot
 # Minimal RPM build requirements
-Requires:       rpm-build, gcc, gcc-c++, redhat-rpm-config, make, tar, patch
-Requires:       diffutils, gzip, bzip2, unzip
+Requires:       rpm-build >= 4.4.2.1
+Requires:       gcc
+Requires:       gcc-c++
+Requires:       redhat-rpm-config
+Requires:       make
+Requires:       tar
+Requires:       diffutils
+Requires:       gzip
+Requires:       bzip2
+Requires:       unzip
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -38,6 +52,7 @@ rpmdev-vercmp       RPM version comparison checker
 spectool            Expand and download sources and patches in specfiles
 rpmdev-wipetree     Erase all files within dirs created by rpmdev-setuptree
 rpmdev-extract      Extract various archives, "tar xvf" style
+...and many more.
 
 
 %prep
@@ -63,35 +78,10 @@ for dir in %{emacs_sitestart_d} %{xemacs_sitestart_d} ; do
   touch $RPM_BUILD_ROOT$dir/rpmdev-init.elc
 done
 
-# Backwards compatibility symlinks
-ln -s rpmdev-checksig    $RPM_BUILD_ROOT%{_bindir}/fedora-rpmchecksig
-ln -s rpmdev-diff        $RPM_BUILD_ROOT%{_bindir}/fedora-diffarchive
-ln -s rpmdev-extract     $RPM_BUILD_ROOT%{_bindir}/fedora-extract
-ln -s rpmdev-md5         $RPM_BUILD_ROOT%{_bindir}/fedora-md5
-ln -s rpmdev-newspec     $RPM_BUILD_ROOT%{_bindir}/fedora-newrpmspec
-ln -s rpmdev-rmdevelrpms $RPM_BUILD_ROOT%{_bindir}/fedora-rmdevelrpms
-ln -s rpmdev-setuptree   $RPM_BUILD_ROOT%{_bindir}/fedora-buildrpmtree
-ln -s rpmdev-vercmp      $RPM_BUILD_ROOT%{_bindir}/fedora-rpmvercmp
-ln -s rpmdev-wipetree    $RPM_BUILD_ROOT%{_bindir}/fedora-wipebuildtree
-ln -s rpminfo            $RPM_BUILD_ROOT%{_bindir}/fedora-rpminfo
-
-
-%check
-make check
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
-%post
-# Upgrade from fedora-rpmdevtools:
-oldconf=%{_sysconfdir}/fedora/rmdevelrpms.conf
-if [ $1 -eq 1 -a -f $oldconf ] ; then
-  echo "5615a64d80f6e6b4df77b3ab0ef1469c  $oldconf" \
-  | md5sum -c --status - >/dev/null 2>&1 || \
-  cat $oldconf > %{_sysconfdir}/rpmdevtools/rmdevelrpms.conf || :
-fi
 
 %triggerin -- emacs-common
 [ -d %{emacs_sitestart_d} ] && \
@@ -113,13 +103,43 @@ fi
 %doc COPYING README*
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_datadir}/rpmdevtools/
-%{_bindir}/*
-%{_prefix}/lib/rpm/check-*
+%{_bindir}/rpm*
+%{_bindir}/spectool
 %ghost %{_datadir}/*emacs
-%{_mandir}/man?/*.*
+%{_mandir}/man[18]/rpm*.[18]*
 
 
 %changelog
+* Thu Jul  5 2007 Ville Skyttä <ville.skytta at iki.fi> - 6.0-1
+- Remove check-{buildroot,rpaths*}, now included in rpm-build >= 4.4.2.1.
+- Drop explicit dependency on patch, pulled in by recent rpm-build.
+- Add cmake and scons to default devel package list in rpmdev-rmdevelrpms.
+- Add LSB comment block to init script template.
+
+* Wed Jun 27 2007 Ville Skyttä <ville.skytta at iki.fi>
+- Add 2-argument form for comparing EVR strings to rpmdev-vercmp
+  (available only if rpmUtils.miscutils is available).
+
+* Sat Jun 16 2007 Ville Skyttä <ville.skytta at iki.fi>
+- Include rpmsodiff and dependencies (rpmargs, rpmelfsym, rpmfile, rpmpeek,
+  rpmsoname) from ALT Linux's qa-robot package.
+- Include rpmls (#213778).
+
+* Fri Jun 15 2007 Ville Skyttä <ville.skytta at iki.fi>
+- Update spectool to 1.0.9 (#243731).
+
+* Wed Apr 11 2007 Ville Skyttä <ville.skytta at iki.fi>
+- Add --list-only option to rmdevelrpms (Thorsten Leemhuis).
+
+* Tue Mar 13 2007 Ville Skyttä <ville.skytta at iki.fi>
+- BR perl(ExtUtils::MakeMaker) by default in perl spec template.
+- Drop deprecated backwards compatibility with fedora-rpmdevtools.
+- Update URL.
+
+* Wed Nov  8 2006 Ville Skyttä <ville.skytta at iki.fi>
+- Arch-qualify output of matched packages in rmdevelrpms and allow
+  arch-qualified packages in the config file.
+
 * Wed Oct 25 2006 Ville Skyttä <ville.skytta at iki.fi> - 5.3-1
 - Update spectool to 1.0.8, fixes #212108.
 
