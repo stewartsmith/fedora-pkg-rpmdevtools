@@ -3,7 +3,7 @@
 %define spectool_version   1.0.9
 
 Name:           rpmdevtools
-Version:        6.3
+Version:        6.4
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Oct 12 2007 Lubomir Kundrak <lkundrak@redhat.com> - 6.4-1
+- Import the previous fix into CVS to resync, bump version
+
 * Fri Oct 12 2007 Lubomir Kundrak <lkundrak@redhat.com> - 6.3-1
 - Fix paths in qa-robot tools
 
