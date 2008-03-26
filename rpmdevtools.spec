@@ -1,21 +1,23 @@
 %define emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
 %define xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
-%define spectool_version   1.0.9
+%define spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        6.4
+Version:        6.5
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
-URL:            http://fedoraproject.org/
-Source0:        %{name}-%{version}.tar.bz2
+URL:            https://fedorahosted.org/rpmdevtools/
+Source0:        http://scop.fedorapeople.org/rpmdevtools/%{name}-%{version}.tar.bz2
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
+BuildRequires:  help2man
+BuildRequires:  %{_bindir}/pod2man
 Provides:       spectool = %{spectool_version}
 Obsoletes:      fedora-rpmdevtools < 5.0
 # Minimal RPM build requirements
@@ -65,6 +67,7 @@ rpmdev-vercmp       RPM version comparison checker
 spectool            Expand and download sources and patches in specfiles
 rpmdev-wipetree     Erase all files within dirs created by rpmdev-setuptree
 rpmdev-extract      Extract various archives, "tar xvf" style
+rpmdev-bumpspec     Bump revision in specfile
 ...and many more.
 
 
@@ -123,6 +126,38 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar 26 2008 Ville Skyttä <ville.skytta at iki.fi> - 6.5-1
+- 6.5.
+
+* Sun Mar 23 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Generate man pages at build time.
+
+* Sat Mar 22 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Remove libgcj-devel and zlib-devel from rmdevelrpms' internal exclusion
+  list, they're not essential on non-devel systems any more.
+
+* Mon Mar 17 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Include ocaml spec template.
+
+* Tue Mar 11 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Include Michael Schwendt's bumpspecfile.py (as rpmdev-bumpspec).
+
+* Tue Feb 12 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Sync with qa-robot upstream.
+- Update spectool to 1.0.10.
+
+* Sun Feb  3 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add support for 7-zip, lzma and lzo in rpmdev-extract.
+
+* Fri Feb  1 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add ';;' to the init script template's reload action.
+
+* Sat Dec  8 2007 Ville Skyttä <ville.skytta at iki.fi>
+- Add fonts spec template from the Fedora Fonts SIG (#407781).
+- Add option to use macro style instead of shell style variables to newspec.
+- Prefer ~/.config/rpmdevtools/rmdevelrpms.conf over ~/.rmdevelrpmsrc in
+  rmdevelrpms.
+
 * Fri Oct 12 2007 Lubomir Kundrak <lkundrak@redhat.com> - 6.4-1
 - Import the previous fix into CVS to resync, bump version
 
