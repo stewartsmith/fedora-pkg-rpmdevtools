@@ -3,7 +3,7 @@
 %define spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        6.6
+Version:        6.7
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -129,6 +129,21 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Aug  3 2008 Ville Skyttä <ville.skytta at iki.fi> - 6.7-1
+- 6.7.
+- Make rpmdev-diff, rpmdev-md5 and rpminfo honor TMPDIR.
+
+* Sat Apr 26 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Make rpmls work with URLs.
+
+* Sun Apr 20 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Include rpm arch in dir names created by rpmdev-extract (#443266).
+
+* Fri Apr 18 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Remove duplicate "reload" from case block in init script template.
+- Fix exit status of "reload" in case service is not running in init
+  script template (#442993).
+
 * Thu Mar 27 2008 Ville Skyttä <ville.skytta at iki.fi> - 6.6-1
 - Fix man page generation.
 
