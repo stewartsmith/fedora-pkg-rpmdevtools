@@ -3,7 +3,7 @@
 %define spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        6.7
+Version:        7.0
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -11,49 +11,28 @@ Group:          Development/Tools
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://fedorahosted.org/rpmdevtools/
-Source0:        http://scop.fedorapeople.org/rpmdevtools/%{name}-%{version}.tar.bz2
+Source0:        https://fedorahosted.org/releases/r/p/rpmdevtools/%{name}-%{version}.tar.lzma
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-# All build deps for man page generation
+# lzma for unpacking the tarball
+BuildRequires:  lzma
+# help2man, pod2man, *python for creating man pages
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  python
 BuildRequires:  rpm-python
 Provides:       spectool = %{spectool_version}
-Obsoletes:      fedora-rpmdevtools < 5.0
-# Minimal RPM build requirements
-Requires:       bash
-Requires:       bzip2
-Requires:       coreutils
-Requires:       cpio
 Requires:       diffutils
-Requires:       findutils
-Requires:       gawk
-Requires:       gcc
-Requires:       gcc-c++
-Requires:       grep
-Requires:       gzip
-Requires:       info
-Requires:       make
-Requires:       patch
-Requires:       redhat-release
-Requires:       redhat-rpm-config
-Requires:       rpm-build >= 4.4.2.1
-Requires:       sed
-Requires:       tar
-Requires:       unzip
-Requires:       util-linux
-Requires:       which
-# Additionally required for tool operations
-#Requires:      cpio
 Requires:       fakeroot
 Requires:       file
-Requires:       perl
-Requires:       python
+Requires:       findutils
+Requires:       gawk
+Requires:       grep
+Requires:       rpm-build >= 4.4.2.1
 Requires:       rpm-python
-#Requires:      sed
+Requires:       sed
 Requires:       wget
 
 %description
@@ -65,7 +44,7 @@ rpmdev-newspec      Creates new .spec from template
 rpmdev-rmdevelrpms  Find (and optionally remove) "development" RPMs
 rpmdev-checksig     Check package signatures using alternate RPM keyring
 rpminfo             Print information about executables and libraries
-rpmdev-md5          Display the md5sum of all files in an RPM
+rpmdev-md5/sha*     Display checksums of all files in an RPM package file
 rpmdev-vercmp       RPM version comparison checker
 spectool            Expand and download sources and patches in specfiles
 rpmdev-wipetree     Erase all files within dirs created by rpmdev-setuptree
@@ -129,6 +108,42 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Dec 26 2008 Ville Skyttä <ville.skytta at iki.fi> - 7.0-1
+- 7.0.
+- Drop fonts spec template, adapt to new ones from Fedora fonts SIG (#477055).
+- Add man page for rpmdev-newspec.
+
+* Tue Dec 16 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add imake and intltool to internal list of devel packages in rmdevelrpms.
+
+* Sat Dec 13 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add rpmdev-sha*/*sum companions to rpmdev-md5 (ticket #7).
+
+* Wed Nov 26 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add vamp-plugin-sdk to internal list of non-devel packages in rmdevelrpms
+  (#472641, Michael Schwendt).
+
+* Thu Nov 20 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Drop "minimal buildroot" dependencies.
+- Drop fedora-rpmdevtools Obsoletes.
+
+* Mon Oct 13 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Show available types in rpmdev-newspec --help (ticket #6, Todd Zullinger).
+
+* Fri Sep 26 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add -r/--rightmost option to rpmdev-bumpspec (ticket #1, Thorsten Leemhuis).
+- Add %%packager from rpm config to the set of defaults for rpmdev-bumpspec's
+  user string.
+
+* Thu Sep 25 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Bring rpmdev-bumpspec copyright holder closer to truth (Michael Schwendt).
+
+* Mon Sep 22 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Switch to lzma compressed tarball.
+
+* Sun Sep  7 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Improve arch specific %%files in perl spec template (#461177, Chris Weyl).
+
 * Sun Aug  3 2008 Ville Skyttä <ville.skytta at iki.fi> - 6.7-1
 - 6.7.
 - Make rpmdev-diff, rpmdev-md5 and rpminfo honor TMPDIR.
