@@ -4,7 +4,7 @@
 
 Name:           rpmdevtools
 Version:        7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
@@ -108,6 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Fri Dec 26 2008 Ville Skyttä <ville.skytta at iki.fi> - 7.0-1
 - 7.0.
 - Drop fonts spec template, adapt to new ones from Fedora fonts SIG (#477055).
