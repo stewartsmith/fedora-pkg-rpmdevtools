@@ -1,17 +1,17 @@
-%define emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
-%define xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
-%define spectool_version   1.0.10
+%global emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
+%global xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
+%global spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        7.0
-Release:        2%{?dist}
+Version:        7.1
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://fedorahosted.org/rpmdevtools/
-Source0:        https://fedorahosted.org/releases/r/p/rpmdevtools/%{name}-%{version}.tar.lzma
+Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.lzma
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -31,9 +31,11 @@ Requires:       findutils
 Requires:       gawk
 Requires:       grep
 Requires:       rpm-build >= 4.4.2.1
-Requires:       rpm-python
+Requires:       rpm-python >= 4.4.2.2
 Requires:       sed
 Requires:       wget
+# For _get_cword in bash completion snippet
+Conflicts:      bash-completion < 20080705
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -100,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc COPYING README*
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
+%{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
 %{_bindir}/rpm*
 %{_bindir}/spectool
@@ -108,8 +111,25 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+* Sat Apr  4 2009 Ville Skyttä <ville.skytta at iki.fi> - 7.1-1
+- 7.1.
+- Make rpmdev-md5 and friends work on non-srpm package files too.
+
+* Sun Mar 15 2009 Ville Skyttä <ville.skytta at iki.fi>
+- Add bash completion.
+
+* Mon Mar  9 2009 Ville Skyttä <ville.skytta at iki.fi>
+- Add query format option to rmdevelrpms, sort output by NEVRA.
+
+* Sun Feb 22 2009 Ville Skyttä <ville.skytta at iki.fi>
+- Use %%global instead of %%define in spec templates.
+- Handle %%global in addition to %%define in rpmdev-bumpspec.
+
+* Mon Jan 26 2009 Ville Skyttä <ville.skytta at iki.fi>
+- Add result dependent exit statuses to rpmdev-vercmp.
+
+* Fri Dec 26 2008 Ville Skyttä <ville.skytta at iki.fi>
+- Add minimum version to rpm-python dependency (for rpmdev-bumpspec).
 
 * Fri Dec 26 2008 Ville Skyttä <ville.skytta at iki.fi> - 7.0-1
 - 7.0.
