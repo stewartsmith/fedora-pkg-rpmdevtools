@@ -4,7 +4,7 @@
 
 Name:           rpmdevtools
 Version:        7.3
-Release:        1
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
