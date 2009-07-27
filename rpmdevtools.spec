@@ -4,7 +4,7 @@
 
 Name:           rpmdevtools
 Version:        7.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
@@ -111,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Mon May 25 2009 Ville Skyttä <ville.skytta at iki.fi> - 7.3-1
 - Release 7.3.
 
