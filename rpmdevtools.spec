@@ -3,25 +3,24 @@
 %global spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        7.3
-Release:        2%{?dist}
+Version:        7.4
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://fedorahosted.org/rpmdevtools/
-Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.lzma
+Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.xz
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
+Patch0:         spectool-1.0.10-sourcenum.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
-# lzma for unpacking the tarball
-BuildRequires:  lzma
 # help2man, pod2man, *python for creating man pages
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
-BuildRequires:  python
+BuildRequires:  python >= 2.4
 BuildRequires:  rpm-python
 Provides:       spectool = %{spectool_version}
 Requires:       diffutils
@@ -30,6 +29,8 @@ Requires:       file
 Requires:       findutils
 Requires:       gawk
 Requires:       grep
+Requires:       man
+Requires:       python >= 2.4
 Requires:       rpm-build >= 4.4.2.1
 Requires:       rpm-python
 Requires:       sed
@@ -46,7 +47,7 @@ rpmdev-newspec      Creates new .spec from template
 rpmdev-rmdevelrpms  Find (and optionally remove) "development" RPMs
 rpmdev-checksig     Check package signatures using alternate RPM keyring
 rpminfo             Print information about executables and libraries
-rpmdev-md5/sha*     Display checksums of all files in an RPM package file
+rpmdev-md5/sha*     Display checksums of all files in an archive file
 rpmdev-vercmp       RPM version comparison checker
 spectool            Expand and download sources and patches in specfiles
 rpmdev-wipetree     Erase all files within dirs created by rpmdev-setuptree
@@ -57,7 +58,10 @@ rpmdev-bumpspec     Bump revision in specfile
 
 %prep
 %setup -q -a 1
-cp -p spectool*/README README.spectool
+cp -p spectool-%{spectool_version}/README README.spectool
+cd spectool-%{spectool_version}
+%patch0 -p1
+cd ..
 
 
 %build
@@ -70,7 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
-install -pm 755 spectool*/spectool $RPM_BUILD_ROOT%{_bindir}
+install -pm 755 spectool-%{spectool_version}/spectool $RPM_BUILD_ROOT%{_bindir}
 
 for dir in %{emacs_sitestart_d} %{xemacs_sitestart_d} ; do
   install -dm 755 $RPM_BUILD_ROOT$dir
@@ -100,17 +104,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING README*
+%doc COPYING NEWS README*
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
-%{_bindir}/rpm*
-%{_bindir}/spectool
+%{_bindir}/*
 %ghost %{_datadir}/*emacs
-%{_mandir}/man[18]/rpm*.[18]*
+%{_mandir}/man[18]/*.[18]*
 
 
 %changelog
+* Fri Aug 21 2009 Ville Skyttä <ville.skytta@iki.fi> - 7.4-1
+- Update to 7.4, fixes #215927 and #466353.
+- Patch spectool to make -s and -p to work as documented (Todd Zullinger).
+
 * Sun Jul 26 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
