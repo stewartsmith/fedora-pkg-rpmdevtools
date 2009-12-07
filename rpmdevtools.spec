@@ -3,7 +3,7 @@
 %global spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        7.5
+Version:        7.6
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Dec  7 2009 Ville Skyttä <ville.skytta@iki.fi> - 7.6-1
+- Update to 7.6, fixes #528907.
+
 * Thu Sep 17 2009 Ville Skyttä <ville.skytta@iki.fi> - 7.5-1
 - Update to 7.5, fixes #502403.
 
