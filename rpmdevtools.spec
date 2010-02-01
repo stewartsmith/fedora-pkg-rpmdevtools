@@ -3,7 +3,7 @@
 %global spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        7.6
+Version:        7.7
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -31,7 +31,7 @@ Requires:       gawk
 Requires:       grep
 Requires:       man
 Requires:       python >= 2.4
-Requires:       rpm-build >= 4.4.2.1
+Requires:       rpm-build >= 4.4.2.3
 Requires:       rpm-python
 Requires:       sed
 Requires:       wget
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb  2 2010 Ville Skyttä <ville.skytta@iki.fi> - 7.7-1
+- Update to 7.7, fixes #558263.
+
 * Mon Dec  7 2009 Ville Skyttä <ville.skytta@iki.fi> - 7.6-1
 - Update to 7.6, fixes #528907.
 
