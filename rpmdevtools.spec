@@ -3,7 +3,7 @@
 %global spectool_version   1.0.10
 
 Name:           rpmdevtools
-Version:        7.9
+Version:        7.10
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -14,6 +14,7 @@ URL:            https://fedorahosted.org/rpmdevtools/
 Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.xz
 Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
 Patch0:         spectool-1.0.10-sourcenum.patch
+Patch1:         spectool-1.0.10-problemtags-637000.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -61,6 +62,7 @@ rpmdev-bumpspec     Bump revision in specfile
 cp -p spectool-%{spectool_version}/README README.spectool
 cd spectool-%{spectool_version}
 %patch0 -p1
+%patch1 -p1
 cd ..
 
 
@@ -114,6 +116,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Sep 27 2010 Ville Skyttä <ville.skytta@iki.fi> - 7.10-1
+- Update to 7.10, fixes #595135 and #619867.
+- Patch spectool to work with specfiles containing Icon or BuildArchitectures
+  (#637000).
+
 * Thu May 20 2010 Ville Skyttä <ville.skytta@iki.fi> - 7.9-1
 - Update to 7.9, fixes #588313 and #589705.
 
