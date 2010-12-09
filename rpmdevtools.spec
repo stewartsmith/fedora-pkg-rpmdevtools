@@ -1,5 +1,7 @@
 %global emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
 %global xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
+# Intentionally not updating spectool to 1.0.11, it uses a problematic
+# wget -N -O combination.
 %global spectool_version   1.0.10
 
 Name:           rpmdevtools
