@@ -1,11 +1,7 @@
-%global emacs_sitestart_d  %{_datadir}/emacs/site-lisp/site-start.d
-%global xemacs_sitestart_d %{_datadir}/xemacs/site-packages/lisp/site-start.d
-# Intentionally not updating spectool to 1.0.11, it uses a problematic
-# wget -N -O combination.
-%global spectool_version   1.0.10
+%global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        7.10
+Version:        8.0
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -14,9 +10,6 @@ Group:          Development/Tools
 License:        GPLv2+ and GPLv2
 URL:            https://fedorahosted.org/rpmdevtools/
 Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.xz
-Source1:        http://people.redhat.com/nphilipp/spectool/spectool-%{spectool_version}.tar.bz2
-Patch0:         spectool-1.0.10-sourcenum.patch
-Patch1:         spectool-1.0.10-problemtags-637000.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
@@ -25,7 +18,12 @@ BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  python >= 2.4
 BuildRequires:  rpm-python
+# emacs-common >= 1:22.3-3 for macros.emacs
+BuildRequires:  emacs-common >= 1:22.3-3
+# xemacs-common >= 21.5.29-8 for macros.xemacs
+BuildRequires:  xemacs-common >= 21.5.29-8
 Provides:       spectool = %{spectool_version}
+Requires:       curl
 Requires:       diffutils
 Requires:       fakeroot
 Requires:       file
@@ -37,7 +35,9 @@ Requires:       python >= 2.4
 Requires:       rpm-build >= 4.4.2.3
 Requires:       rpm-python
 Requires:       sed
-Requires:       wget
+%if 0%{?fedora} > 14
+Requires:       emacs-filesystem
+%endif
 # For _get_cword in bash completion snippet
 Conflicts:      bash-completion < 20080705
 
@@ -60,12 +60,7 @@ rpmdev-bumpspec     Bump revision in specfile
 
 
 %prep
-%setup -q -a 1
-cp -p spectool-%{spectool_version}/README README.spectool
-cd spectool-%{spectool_version}
-%patch0 -p1
-%patch1 -p1
-cd ..
+%setup -q
 
 
 %build
@@ -78,9 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
-install -pm 755 spectool-%{spectool_version}/spectool $RPM_BUILD_ROOT%{_bindir}
-
-for dir in %{emacs_sitestart_d} %{xemacs_sitestart_d} ; do
+for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
   install -dm 755 $RPM_BUILD_ROOT$dir
   ln -s %{_datadir}/rpmdevtools/rpmdev-init.el $RPM_BUILD_ROOT$dir
   touch $RPM_BUILD_ROOT$dir/rpmdev-init.elc
@@ -91,33 +84,44 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 
+%if 0%{?fedora} <= 14
 %triggerin -- emacs-common
-[ -d %{emacs_sitestart_d} ] && \
-  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{emacs_sitestart_d} || :
-
-%triggerin -- xemacs-common
-[ -d %{xemacs_sitestart_d} ] && \
-  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{xemacs_sitestart_d} || :
+[ -d %{_emacs_sitestartdir} ] && \
+  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{_emacs_sitestartdir} || :
 
 %triggerun -- emacs-common
-[ $2 -eq 0 ] && rm -f %{emacs_sitestart_d}/rpmdev-init.el* || :
+[ $2 -eq 0 ] && rm -f %{_emacs_sitestartdir}/rpmdev-init.el* || :
+%endif
+
+%triggerin -- xemacs-common
+[ -d %{_xemacs_sitestartdir} ] && \
+  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{_xemacs_sitestartdir} || :
 
 %triggerun -- xemacs-common
-[ $2 -eq 0 ] && rm -f %{xemacs_sitestart_d}/rpmdev-init.el* || :
+[ $2 -eq 0 ] && rm -f %{_xemacs_sitestartdir}/rpmdev-init.el* || :
 
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING NEWS README*
+%doc COPYING NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
 %{_bindir}/*
-%ghost %{_datadir}/*emacs
+%if 0%{?fedora} > 14
+%{_emacs_sitestartdir}/rpmdev-init.el
+%ghost %{_emacs_sitestartdir}/rpmdev-init.elc
+%else
+%ghost %{_datadir}/emacs
+%endif
+%ghost %{_datadir}/xemacs
 %{_mandir}/man[18]/*.[18]*
 
 
 %changelog
+* Sun Feb  6 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.0-1
+- Update to 8.0, fixes #519061 and #657594.
+
 * Mon Sep 27 2010 Ville Skyttä <ville.skytta@iki.fi> - 7.10-1
 - Update to 7.10, fixes #595135 and #619867.
 - Patch spectool to work with specfiles containing Icon or BuildArchitectures
