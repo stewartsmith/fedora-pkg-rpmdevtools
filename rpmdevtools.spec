@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
@@ -119,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sun Feb  6 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.0-1
 - Update to 8.0, fixes #519061 and #657594.
 
