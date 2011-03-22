@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
@@ -37,6 +37,7 @@ Requires:       rpm-python
 Requires:       sed
 %if 0%{?fedora} > 14
 Requires:       emacs-filesystem
+Requires:       xemacs-filesystem
 %endif
 # For _get_cword in bash completion snippet
 Conflicts:      bash-completion < 20080705
@@ -91,7 +92,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -- emacs-common
 [ $2 -eq 0 ] && rm -f %{_emacs_sitestartdir}/rpmdev-init.el* || :
-%endif
 
 %triggerin -- xemacs-common
 [ -d %{_xemacs_sitestartdir} ] && \
@@ -99,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %triggerun -- xemacs-common
 [ $2 -eq 0 ] && rm -f %{_xemacs_sitestartdir}/rpmdev-init.el* || :
+%endif
 
 
 %files
@@ -111,14 +112,19 @@ rm -rf $RPM_BUILD_ROOT
 %if 0%{?fedora} > 14
 %{_emacs_sitestartdir}/rpmdev-init.el
 %ghost %{_emacs_sitestartdir}/rpmdev-init.elc
+%{_xemacs_sitestartdir}/rpmdev-init.el
+%ghost %{_xemacs_sitestartdir}/rpmdev-init.elc
 %else
 %ghost %{_datadir}/emacs
-%endif
 %ghost %{_datadir}/xemacs
+%endif
 %{_mandir}/man[18]/*.[18]*
 
 
 %changelog
+* Tue Mar  1 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.0-3
+- Require xemacs-filesystem on F-15+ (#672093).
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
