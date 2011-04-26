@@ -1,8 +1,8 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.0
-Release:        3%{?dist}
+Version:        8.1
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 Group:          Development/Tools
@@ -122,6 +122,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 26 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.1-1
+- Update to 8.1.
+
 * Tue Mar  1 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.0-3
 - Require xemacs-filesystem on F-15+ (#672093).
 
