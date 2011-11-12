@@ -1,7 +1,7 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.1
+Version:        8.2
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -39,8 +39,6 @@ Requires:       sed
 Requires:       emacs-filesystem
 Requires:       xemacs-filesystem
 %endif
-# For _get_cword in bash completion snippet
-Conflicts:      bash-completion < 20080705
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -103,7 +101,6 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(-,root,root,-)
 %doc COPYING NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_sysconfdir}/bash_completion.d/
@@ -122,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov 12 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.2-1
+- Update to 8.2.
+
 * Tue Apr 26 2011 Ville Skyttä <ville.skytta@iki.fi> - 8.1-1
 - Update to 8.1.
 
