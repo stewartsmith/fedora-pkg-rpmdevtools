@@ -1,16 +1,14 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.2
-Release:        3%{?dist}
+Version:        8.3
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
-Group:          Development/Tools
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://fedorahosted.org/rpmdevtools/
 Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.xz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
@@ -35,10 +33,8 @@ Requires:       python >= 2.4
 Requires:       rpm-build >= 4.4.2.3
 Requires:       rpm-python
 Requires:       sed
-%if 0%{?fedora} > 14
 Requires:       emacs-filesystem
 Requires:       xemacs-filesystem
-%endif
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -79,46 +75,24 @@ for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
 done
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
-%if 0%{?fedora} <= 14
-%triggerin -- emacs-common
-[ -d %{_emacs_sitestartdir} ] && \
-  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{_emacs_sitestartdir} || :
-
-%triggerun -- emacs-common
-[ $2 -eq 0 ] && rm -f %{_emacs_sitestartdir}/rpmdev-init.el* || :
-
-%triggerin -- xemacs-common
-[ -d %{_xemacs_sitestartdir} ] && \
-  ln -sf %{_datadir}/rpmdevtools/rpmdev-init.el %{_xemacs_sitestartdir} || :
-
-%triggerun -- xemacs-common
-[ $2 -eq 0 ] && rm -f %{_xemacs_sitestartdir}/rpmdev-init.el* || :
-%endif
-
-
 %files
 %doc COPYING NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
 %{_bindir}/*
-%if 0%{?fedora} > 14
 %{_emacs_sitestartdir}/rpmdev-init.el
 %ghost %{_emacs_sitestartdir}/rpmdev-init.elc
 %{_xemacs_sitestartdir}/rpmdev-init.el
 %ghost %{_xemacs_sitestartdir}/rpmdev-init.elc
-%else
-%ghost %{_datadir}/emacs
-%ghost %{_datadir}/xemacs
-%endif
 %{_mandir}/man[18]/*.[18]*
 
 
 %changelog
+* Sun Sep  2 2012 Ville Skyttä <ville.skytta@iki.fi> - 8.3-1
+- Update to 8.3.
+- Drop specfile constructs no longer needed with Fedora's rpm.
+
 * Sat Jul 21 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
