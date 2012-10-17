@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -18,8 +18,10 @@ BuildRequires:  python >= 2.4
 BuildRequires:  rpm-python
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
+%if 0%{?fedora}
 # xemacs-common >= 21.5.29-8 for macros.xemacs
 BuildRequires:  xemacs-common >= 21.5.29-8
+%endif
 Provides:       spectool = %{spectool_version}
 Requires:       curl
 Requires:       diffutils
@@ -34,7 +36,9 @@ Requires:       rpm-build >= 4.4.2.3
 Requires:       rpm-python
 Requires:       sed
 Requires:       emacs-filesystem
+%if 0%{?fedora}
 Requires:       xemacs-filesystem
+%endif
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -68,7 +72,11 @@ rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
+%if 0%{?fedora}
 for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
+%else
+for dir in %{_emacs_sitestartdir} ; do
+%endif
   install -dm 755 $RPM_BUILD_ROOT$dir
   ln -s %{_datadir}/rpmdevtools/rpmdev-init.el $RPM_BUILD_ROOT$dir
   touch $RPM_BUILD_ROOT$dir/rpmdev-init.elc
@@ -83,12 +91,17 @@ done
 %{_bindir}/*
 %{_emacs_sitestartdir}/rpmdev-init.el
 %ghost %{_emacs_sitestartdir}/rpmdev-init.elc
+%if 0%{?fedora}
 %{_xemacs_sitestartdir}/rpmdev-init.el
 %ghost %{_xemacs_sitestartdir}/rpmdev-init.elc
+%endif
 %{_mandir}/man[18]/*.[18]*
 
 
 %changelog
+* Tue Oct 16 2012 Thomas Woerner <twoerner@redhat.com> - 8.3-2
+- xemacs is not available on RHEL (RHBZ#866841)
+
 * Sun Sep  2 2012 Ville Skyttä <ville.skytta@iki.fi> - 8.3-1
 - Update to 8.3.
 - Drop specfile constructs no longer needed with Fedora's rpm.
