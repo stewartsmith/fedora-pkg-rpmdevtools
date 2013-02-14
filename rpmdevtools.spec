@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -99,6 +99,9 @@ done
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Tue Oct 16 2012 Thomas Woerner <twoerner@redhat.com> - 8.3-2
 - xemacs is not available on RHEL (RHBZ#866841)
 
