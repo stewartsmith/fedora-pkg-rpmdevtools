@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -99,6 +99,9 @@ done
 
 
 %changelog
+* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.3-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Jul 17 2013 Petr Pisar <ppisar@redhat.com> - 8.3-4
 - Perl 5.18 rebuild
 
