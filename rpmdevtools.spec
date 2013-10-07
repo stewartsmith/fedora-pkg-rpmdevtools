@@ -1,8 +1,8 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.3
-Release:        5%{?dist}
+Version:        8.4
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -30,7 +30,6 @@ Requires:       file
 Requires:       findutils
 Requires:       gawk
 Requires:       grep
-Requires:       %{_bindir}/man
 Requires:       python >= 2.4
 Requires:       rpm-build >= 4.4.2.3
 Requires:       rpm-python
@@ -38,6 +37,10 @@ Requires:       sed
 Requires:       emacs-filesystem
 %if 0%{?fedora}
 Requires:       xemacs-filesystem
+%endif
+%if 0%{?fedora} && 0%{?fedora} < 21
+# Transition from bundled to non-bundled devscripts, just for updates
+Requires(pre):  devscripts
 %endif
 
 %description
@@ -99,6 +102,9 @@ done
 
 
 %changelog
+* Mon Oct  7 2013 Ville Skyttä <ville.skytta@iki.fi> - 8.4-1
+- Update to 8.4.
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.3-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
