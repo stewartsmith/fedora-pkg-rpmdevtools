@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -37,10 +37,6 @@ Requires:       sed
 Requires:       emacs-filesystem
 %if 0%{?fedora}
 Requires:       xemacs-filesystem
-%endif
-%if 0%{?fedora} && 0%{?fedora} < 21
-# Transition from bundled to non-bundled devscripts, just for updates
-Requires(pre):  devscripts
 %endif
 
 %description
@@ -102,6 +98,9 @@ done
 
 
 %changelog
+* Thu Oct 17 2013 Ville Skyttä <ville.skytta@iki.fi> - 8.4-2
+- Do not require devscripts in any scenario.
+
 * Mon Oct  7 2013 Ville Skyttä <ville.skytta@iki.fi> - 8.4-1
 - Update to 8.4.
 
