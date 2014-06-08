@@ -2,7 +2,7 @@
 
 Name:           rpmdevtools
 Version:        8.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -98,6 +98,9 @@ done
 
 
 %changelog
+* Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Thu Oct 17 2013 Ville Skyttä <ville.skytta@iki.fi> - 8.4-2
 - Do not require devscripts in any scenario.
 
