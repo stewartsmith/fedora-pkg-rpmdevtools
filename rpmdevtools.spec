@@ -1,8 +1,8 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.4
-Release:        3%{?dist}
+Version:        8.5
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -14,7 +14,7 @@ BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
-BuildRequires:  python >= 2.4
+BuildRequires:  python >= 2.6
 BuildRequires:  rpm-python
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
@@ -83,7 +83,9 @@ done
 
 
 %files
-%doc COPYING NEWS
+%{!?_licensedir:%global license %%doc}
+%license COPYING
+%doc NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
 %{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
@@ -98,6 +100,10 @@ done
 
 
 %changelog
+* Mon Oct 20 2014 Ville Skyttä <ville.skytta@iki.fi> - 8.5-1
+- Update to 8.5
+- Mark COPYING as %%license where applicable
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.4-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
