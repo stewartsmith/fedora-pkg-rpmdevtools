@@ -1,7 +1,7 @@
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.5
+Version:        8.6
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -18,6 +18,7 @@ BuildRequires:  python >= 2.6
 BuildRequires:  rpm-python
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
+BuildRequires:  bash-completion
 %if 0%{?fedora}
 # xemacs-common >= 21.5.29-8 for macros.xemacs
 BuildRequires:  xemacs-common >= 21.5.29-8
@@ -71,6 +72,10 @@ rm -rf $RPM_BUILD_ROOT
 
 make install DESTDIR=$RPM_BUILD_ROOT
 
+echo %%{_datadir}/bash-completion > %{name}.files
+[ -d $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d ] && \
+echo %%{_sysconfdir}/bash_completion.d > %{name}.files
+
 %if 0%{?fedora}
 for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
 %else
@@ -82,12 +87,11 @@ for dir in %{_emacs_sitestartdir} ; do
 done
 
 
-%files
+%files -f %{name}.files
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
-%{_sysconfdir}/bash_completion.d/
 %{_datadir}/rpmdevtools/
 %{_bindir}/*
 %{_emacs_sitestartdir}/rpmdev-init.el
@@ -100,6 +104,9 @@ done
 
 
 %changelog
+* Sun May 10 2015 Ville Skyttä <ville.skytta@iki.fi> - 8.6-1
+- Update to 8.6
+
 * Mon Oct 20 2014 Ville Skyttä <ville.skytta@iki.fi> - 8.5-1
 - Update to 8.5
 - Mark COPYING as %%license where applicable
