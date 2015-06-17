@@ -1,8 +1,14 @@
 %global spectool_version 1.0.10
 
+%if 0%{?fedora} > 22
+%bcond_without python3
+%else
+%bconf_with python3
+%endif
+
 Name:           rpmdevtools
 Version:        8.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -14,8 +20,13 @@ BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
+%if %{with python3}
+BuildRequires:  python3
+BuildRequires:  rpm-python3
+%else
 BuildRequires:  python >= 2.6
 BuildRequires:  rpm-python
+%endif
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
 BuildRequires:  bash-completion
@@ -31,9 +42,13 @@ Requires:       file
 Requires:       findutils
 Requires:       gawk
 Requires:       grep
-Requires:       python >= 2.4
 Requires:       rpm-build >= 4.4.2.3
+%if %{with python3}
+Requires:       rpm-python3
+%else
+Requires:       python >= 2.4
 Requires:       rpm-python
+%endif
 Requires:       sed
 Requires:       emacs-filesystem
 %if 0%{?fedora}
@@ -60,6 +75,10 @@ rpmdev-bumpspec     Bump revision in specfile
 
 %prep
 %setup -q
+%if %{with python3}
+grep -lF "%{_bindir}/python " * \
+| xargs sed -i -e "s|%{_bindir}/python |%{_bindir}/python3 |"
+%endif
 
 
 %build
@@ -104,6 +123,9 @@ done
 
 
 %changelog
+* Fri Jun  5 2015 Ville Skyttä <ville.skytta@iki.fi> - 8.6-2
+- Use python3 on > F-22
+
 * Sun May 10 2015 Ville Skyttä <ville.skytta@iki.fi> - 8.6-1
 - Update to 8.6
 
