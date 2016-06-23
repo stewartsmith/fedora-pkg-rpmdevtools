@@ -83,6 +83,7 @@ grep -lF "%{_bindir}/python " * \
 
 %build
 %configure --libdir=%{_prefix}/lib
+export PATH="$PWD:$PATH" # bug in 8.7's rpmdev-bumpspec.1 build
 %make_build
 
 
