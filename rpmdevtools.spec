@@ -7,8 +7,8 @@
 %endif
 
 Name:           rpmdevtools
-Version:        8.6
-Release:        3%{?dist}
+Version:        8.7
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -24,7 +24,7 @@ BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  python3
 BuildRequires:  rpm-python3
 %else
-BuildRequires:  python >= 2.6
+BuildRequires:  python >= 2.7
 BuildRequires:  rpm-python
 %endif
 # emacs-common >= 1:22.3-3 for macros.emacs
@@ -83,13 +83,13 @@ grep -lF "%{_bindir}/python " * \
 
 %build
 %configure --libdir=%{_prefix}/lib
-make %{?_smp_mflags}
+%make_build
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 echo %%{_datadir}/bash-completion > %{name}.files
 [ -d $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d ] && \
@@ -107,7 +107,6 @@ done
 
 
 %files -f %{name}.files
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc NEWS
 %config(noreplace) %{_sysconfdir}/rpmdevtools/
@@ -123,6 +122,10 @@ done
 
 
 %changelog
+* Thu Jun 23 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.7-1
+- Update to 8.7
+- Specfile cleanups
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 8.6-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
