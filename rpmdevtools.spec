@@ -20,6 +20,7 @@ BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
+BuildRequires:  perl-generators
 %if %{with python3}
 BuildRequires:  python3
 BuildRequires:  rpm-python3
