@@ -7,7 +7,7 @@
 %endif
 
 Name:           rpmdevtools
-Version:        8.7
+Version:        8.8
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -84,7 +84,6 @@ grep -lF "%{_bindir}/python " * \
 
 %build
 %configure --libdir=%{_prefix}/lib
-export PATH="$PWD:$PATH" # bug in 8.7's rpmdev-bumpspec.1 build
 %make_build
 
 
@@ -124,6 +123,12 @@ done
 
 
 %changelog
+* Sat Jun 25 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.8-1
+- Update to 8.8
+
+* Fri Jun 24 2016 Petr Písař <ppisar@redhat.com>
+- Add new mandatory perl build deps
+
 * Thu Jun 23 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.7-1
 - Update to 8.7
 - Specfile cleanups
