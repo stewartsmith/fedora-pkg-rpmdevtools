@@ -7,7 +7,7 @@
 %endif
 
 Name:           rpmdevtools
-Version:        8.8
+Version:        8.9
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -123,6 +123,9 @@ done
 
 
 %changelog
+* Sat Jun 25 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.9-1
+- Update to 8.9
+
 * Sat Jun 25 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.8-1
 - Update to 8.8
 
