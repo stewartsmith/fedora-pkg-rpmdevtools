@@ -8,7 +8,7 @@
 
 Name:           rpmdevtools
 Version:        8.9
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -123,6 +123,9 @@ done
 
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 8.9-2
+- Rebuild for Python 3.6
+
 * Sat Jun 25 2016 Ville Skyttä <ville.skytta@iki.fi> - 8.9-1
 - Update to 8.9
 
