@@ -13,8 +13,8 @@ Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
-URL:            https://fedorahosted.org/rpmdevtools/
-Source0:        https://fedorahosted.org/released/rpmdevtools/%{name}-%{version}.tar.xz
+URL:            https://pagure.io/rpmdevtools
+Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
