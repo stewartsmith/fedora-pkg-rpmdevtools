@@ -3,7 +3,7 @@
 %if 0%{?fedora}
 %bcond_without python3
 %else
-%bconf_with python3
+%bcond_with python3
 %endif
 
 Name:           rpmdevtools
