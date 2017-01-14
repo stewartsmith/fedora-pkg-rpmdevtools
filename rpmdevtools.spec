@@ -1,6 +1,6 @@
 %global spectool_version 1.0.10
 
-%if 0%{?fedora} > 22
+%if 0%{?fedora}
 %bcond_without python3
 %else
 %bconf_with python3
