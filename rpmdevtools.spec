@@ -8,13 +8,16 @@
 
 Name:           rpmdevtools
 Version:        8.10
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
 Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
+
+# Backports from upstream
+Patch0001:      0001-bumpspec-checksig-Avoid-python-3.6-regex-related-dep.patch
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
@@ -75,7 +78,7 @@ rpmdev-bumpspec     Bump revision in specfile
 
 
 %prep
-%setup -q
+%autosetup -p1
 %if %{with python3}
 grep -lF "%{_bindir}/python " * \
 | xargs sed -i -e "s|%{_bindir}/python |%{_bindir}/python3 |"
@@ -123,6 +126,9 @@ done
 
 
 %changelog
+* Sun Sep 16 2018 Neal Gompa <ngompa13@gmail.com> - 8.10-6
+- Fix regex related deprecation warnings (rhbz#1598089)
+
 * Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 8.10-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
