@@ -8,7 +8,7 @@
 
 Name:           rpmdevtools
 Version:        8.10
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -18,6 +18,7 @@ Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.x
 
 # Backports from upstream
 Patch0001:      0001-bumpspec-checksig-Avoid-python-3.6-regex-related-dep.patch
+Patch0002:      0001-Limit-newVersion-s-re.sub-to-a-single-replacement.patch
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
@@ -126,6 +127,9 @@ done
 
 
 %changelog
+* Wed Nov 28 2018 Neal Gompa <ngompa13@gmail.com> - 8.10-7
+- Fix regex substitution issues with Python 3.7 (rhbz#1651954)
+
 * Sun Sep 16 2018 Neal Gompa <ngompa13@gmail.com> - 8.10-6
 - Fix regex related deprecation warnings (rhbz#1598089)
 
