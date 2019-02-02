@@ -8,7 +8,7 @@
 
 Name:           rpmdevtools
 Version:        8.10
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -127,6 +127,9 @@ done
 
 
 %changelog
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 8.10-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Wed Nov 28 2018 Neal Gompa <ngompa13@gmail.com> - 8.10-7
 - Fix regex substitution issues with Python 3.7 (rhbz#1651954)
 
