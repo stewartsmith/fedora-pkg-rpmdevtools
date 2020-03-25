@@ -8,7 +8,7 @@
 
 Name:           rpmdevtools
 Version:        8.10
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -25,6 +25,13 @@ BuildArch:      noarch
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  perl-generators
+# perl dependencies for spectool
+# spectool is executed for creating man page
+BuildRequires:  perl(FileHandle)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(Getopt::Long)
+BuildRequires:  perl(strict)
 %if %{with python3}
 BuildRequires:  python3
 BuildRequires:  rpm-python3
@@ -127,6 +134,9 @@ done
 
 
 %changelog
+* Wed Mar 25 2020 Jitka Plesnikova <jplesnik@redhat.com> - 8.10-11
+- Add perl dependencies needed for build
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 8.10-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
