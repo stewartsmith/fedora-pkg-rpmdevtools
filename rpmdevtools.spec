@@ -1,12 +1,15 @@
 Name:           rpmdevtools
 Version:        9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
 Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
+
+# Backports from upstream
+Patch0001:      0001-spectemplate-python-Fix-conditional-for-manual-requi.patch
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
@@ -111,6 +114,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Thu Jul 16 2020 Neal Gompa <ngompa13@gmail.com> - 9.0-2
+- Backport fix for python spec template
+
 * Tue Jul 14 2020 Neal Gompa <ngompa13@gmail.com> - 9.0-1
 - Update to 9.0
 
