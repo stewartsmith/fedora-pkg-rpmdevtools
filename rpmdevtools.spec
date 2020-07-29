@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -114,6 +114,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 9.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Thu Jul 16 2020 Neal Gompa <ngompa13@gmail.com> - 9.0-2
 - Backport fix for python spec template
 
