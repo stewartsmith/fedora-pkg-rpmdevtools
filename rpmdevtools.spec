@@ -1,5 +1,5 @@
 Name:           rpmdevtools
-Version:        9.1
+Version:        9.2
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -111,6 +111,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Mon Oct 05 2020 Neal Gompa <ngompa13@gmail.com> - 9.2-1
+- Update to 9.2
+
 * Thu Aug 20 2020 Neal Gompa <ngompa13@gmail.com> - 9.1-1
 - Update to 9.1
 
