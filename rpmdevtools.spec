@@ -10,6 +10,7 @@ Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.x
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
+BuildRequires: make
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  perl-generators
