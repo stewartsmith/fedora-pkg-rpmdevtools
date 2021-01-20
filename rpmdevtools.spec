@@ -8,6 +8,10 @@ License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
 Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
 
+# Fedora-specific downstream patches
+## Force legacy datestamp by default until rhbz#1715412 is resolved
+Patch1001:      0001-Force-legacy-datestamp-while-RHBZ-1715412-is-still-a.patch
+
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
 BuildRequires:  make
@@ -114,6 +118,7 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 %changelog
 * Wed Jan 20 2021 Neal Gompa <ngompa13@gmail.com> - 9.3-1
 - Update to 9.3
+- Force legacy datestamp by default until rhbz#1715412 is resolved
 
 * Mon Oct 05 2020 Neal Gompa <ngompa13@gmail.com> - 9.2-1
 - Update to 9.2
