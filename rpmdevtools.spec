@@ -1,5 +1,5 @@
 Name:           rpmdevtools
-Version:        9.2
+Version:        9.3
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -10,7 +10,7 @@ Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.x
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
-BuildRequires: make
+BuildRequires:  make
 BuildRequires:  help2man
 BuildRequires:  %{_bindir}/pod2man
 BuildRequires:  perl-generators
@@ -18,7 +18,7 @@ BuildRequires:  perl-generators
 # spectool is executed for creating man page
 BuildRequires:  python3-devel
 BuildRequires:  python3dist(progressbar2)
-BuildRequires:  python3dist(requests-download)
+BuildRequires:  python3dist(requests)
 BuildRequires:  python3dist(rpm)
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
@@ -112,6 +112,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Wed Jan 20 2021 Neal Gompa <ngompa13@gmail.com> - 9.3-1
+- Update to 9.3
+
 * Mon Oct 05 2020 Neal Gompa <ngompa13@gmail.com> - 9.2-1
 - Update to 9.2
 
