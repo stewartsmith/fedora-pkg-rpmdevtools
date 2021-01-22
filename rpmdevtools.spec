@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -41,7 +41,7 @@ Requires:       grep
 Requires:       rpm-build >= 4.4.2.3
 Requires:       python%{python3_version}dist(argcomplete)
 Requires:       python%{python3_version}dist(progressbar2)
-Requires:       python%{python3_version}dist(requests-download)
+Requires:       python%{python3_version}dist(requests)
 Requires:       python%{python3_version}dist(rpm)
 Requires:       sed
 Requires:       emacs-filesystem
@@ -116,6 +116,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Fri Jan 22 2021 Michal Domonkos <mdomonko@redhat.com> - 9.3-2
+- Replace requests-download dependency with requests
+
 * Wed Jan 20 2021 Neal Gompa <ngompa13@gmail.com> - 9.3-1
 - Update to 9.3
 - Force legacy datestamp by default until rhbz#1715412 is resolved
