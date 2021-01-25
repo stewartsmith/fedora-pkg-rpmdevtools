@@ -1,12 +1,16 @@
 Name:           rpmdevtools
 Version:        9.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
 Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
+
+# Use Accept-Encoding: identity together with decode_content=False
+# This is to avoid text files downloaded gzipped
+Patch1:         https://pagure.io/rpmdevtools/pull-request/77.patch
 
 # Fedora-specific downstream patches
 ## Force legacy datestamp by default until rhbz#1715412 is resolved
@@ -116,6 +120,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Mon Jan 25 2021 Miro Hrončok <mhroncok@redhat.com> - 9.3-3
+- spectool: Download text as text
+
 * Fri Jan 22 2021 Michal Domonkos <mdomonko@redhat.com> - 9.3-2
 - Replace requests-download dependency with requests
 
