@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -120,6 +120,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 9.3-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Mon Jan 25 2021 Miro Hrončok <mhroncok@redhat.com> - 9.3-3
 - spectool: Download text as text
 
