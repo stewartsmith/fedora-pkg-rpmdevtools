@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -43,10 +43,10 @@ Requires:       findutils
 Requires:       gawk
 Requires:       grep
 Requires:       rpm-build >= 4.4.2.3
-Requires:       python%{python3_version}dist(argcomplete)
-Requires:       python%{python3_version}dist(progressbar2)
-Requires:       python%{python3_version}dist(requests)
-Requires:       python%{python3_version}dist(rpm)
+Requires:       python3dist(argcomplete)
+Requires:       python3dist(progressbar2)
+Requires:       python3dist(requests)
+Requires:       python3dist(rpm)
 Requires:       sed
 Requires:       emacs-filesystem
 %if 0%{?fedora}
@@ -120,6 +120,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Mon Feb 15 2021 Miro Hrončok <mhroncok@redhat.com> - 9.3-5
+- Require any Python version of the Python packages
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 9.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
