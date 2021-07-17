@@ -1,16 +1,12 @@
 Name:           rpmdevtools
-Version:        9.3
-Release:        5%{?dist}
+Version:        9.4
+Release:        1%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
 Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
-
-# Use Accept-Encoding: identity together with decode_content=False
-# This is to avoid text files downloaded gzipped
-Patch1:         https://pagure.io/rpmdevtools/pull-request/77.patch
 
 # Fedora-specific downstream patches
 ## Force legacy datestamp by default until rhbz#1715412 is resolved
@@ -52,6 +48,8 @@ Requires:       emacs-filesystem
 %if 0%{?fedora}
 Requires:       xemacs-filesystem
 %endif
+# Optionally support rpmautospec
+Recommends:     python%{python3_version}dist(rpmautospec)
 
 %description
 This package contains scripts and (X)Emacs support files to aid in
@@ -120,6 +118,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Sat Jul 17 2021 Neal Gompa <ngompa@fedoraproject.org> - 9.4-1
+- Update to 9.4
+
 * Mon Feb 15 2021 Miro Hrončok <mhroncok@redhat.com> - 9.3-5
 - Require any Python version of the Python packages
 
