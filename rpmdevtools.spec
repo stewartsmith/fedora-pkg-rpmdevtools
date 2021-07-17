@@ -1,5 +1,5 @@
 Name:           rpmdevtools
-Version:        9.4
+Version:        9.5
 Release:        1%{?dist}
 Summary:        RPM Development Tools
 
@@ -118,6 +118,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Sat Jul 17 2021 Neal Gompa <ngompa@fedoraproject.org> - 9.5-1
+- Update to 9.5
+
 * Sat Jul 17 2021 Neal Gompa <ngompa@fedoraproject.org> - 9.4-1
 - Update to 9.4
 
