@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -27,7 +27,7 @@ BuildRequires:  python3dist(rpm)
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
 BuildRequires:  bash-completion
-%if 0%{?fedora}
+%if 0%{?fedora} && 0%{?fedora} < 36
 # xemacs-common >= 21.5.29-8 for macros.xemacs
 BuildRequires:  xemacs-common >= 21.5.29-8
 %endif
@@ -45,7 +45,7 @@ Requires:       python3dist(requests)
 Requires:       python3dist(rpm)
 Requires:       sed
 Requires:       emacs-filesystem
-%if 0%{?fedora}
+%if 0%{?fedora} && 0%{?fedora} < 36
 Requires:       xemacs-filesystem
 %endif
 # Optionally support rpmautospec
@@ -87,7 +87,7 @@ echo %%{_datadir}/bash-completion > %{name}.files
 [ -d %{buildroot}%{_sysconfdir}/bash_completion.d ] && \
 echo %%{_sysconfdir}/bash_completion.d > %{name}.files
 
-%if 0%{?fedora}
+%if 0%{?fedora} && 0%{?fedora} < 36
 for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
 %else
 for dir in %{_emacs_sitestartdir} ; do
@@ -110,7 +110,7 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 %{_bindir}/*
 %{_emacs_sitestartdir}/rpmdev-init.el
 %ghost %{_emacs_sitestartdir}/rpmdev-init.elc
-%if 0%{?fedora}
+%if 0%{?fedora} && 0%{fedora} < 36
 %{_xemacs_sitestartdir}/rpmdev-init.el
 %ghost %{_xemacs_sitestartdir}/rpmdev-init.elc
 %endif
@@ -118,6 +118,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Tue Nov  9 2021 Jerry James <loganjerry@gmail.com> - 9.5-3
+- Drop XEmacs support in F36 and later
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 9.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
