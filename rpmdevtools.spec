@@ -1,3 +1,9 @@
+%if 0%{?fedora} && 0%{?fedora} < 36
+%bcond_without xemacs
+%else
+%bcond_with xemacs
+%endif
+
 Name:           rpmdevtools
 Version:        9.6
 Release:        2%{?dist}
@@ -27,7 +33,7 @@ BuildRequires:  python3dist(rpm)
 # emacs-common >= 1:22.3-3 for macros.emacs
 BuildRequires:  emacs-common >= 1:22.3-3
 BuildRequires:  bash-completion
-%if 0%{?fedora} && 0%{?fedora} < 36
+%if %{with xemacs}
 # xemacs-common >= 21.5.29-8 for macros.xemacs
 BuildRequires:  xemacs-common >= 21.5.29-8
 %endif
@@ -45,7 +51,7 @@ Requires:       python3dist(requests)
 Requires:       python3dist(rpm)
 Requires:       sed
 Requires:       emacs-filesystem
-%if 0%{?fedora} && 0%{?fedora} < 36
+%if %{with xemacs}
 Requires:       xemacs-filesystem
 %endif
 # Optionally support rpmautospec
@@ -87,7 +93,7 @@ echo %%{_datadir}/bash-completion > %{name}.files
 [ -d %{buildroot}%{_sysconfdir}/bash_completion.d ] && \
 echo %%{_sysconfdir}/bash_completion.d > %{name}.files
 
-%if 0%{?fedora} && 0%{?fedora} < 36
+%if %{with xemacs}
 for dir in %{_emacs_sitestartdir} %{_xemacs_sitestartdir} ; do
 %else
 for dir in %{_emacs_sitestartdir} ; do
@@ -110,7 +116,7 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 %{_bindir}/*
 %{_emacs_sitestartdir}/rpmdev-init.el
 %ghost %{_emacs_sitestartdir}/rpmdev-init.elc
-%if 0%{?fedora} && 0%{fedora} < 36
+%if %{with xemacs}
 %{_xemacs_sitestartdir}/rpmdev-init.el
 %ghost %{_xemacs_sitestartdir}/rpmdev-init.elc
 %endif
