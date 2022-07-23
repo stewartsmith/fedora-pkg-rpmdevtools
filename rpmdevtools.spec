@@ -1,6 +1,6 @@
 Name:           rpmdevtools
 Version:        9.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
@@ -118,6 +118,9 @@ echo ".so man1/rpmdev-spectool.1" > %{buildroot}%{_mandir}/man1/spectool.1
 
 
 %changelog
+* Sat Jul 23 2022 Fedora Release Engineering <releng@fedoraproject.org> - 9.6-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Fri Feb 04 2022 Neal Gompa <ngompa@fedoraproject.org> - 9.6-1
 - Update to 9.6
 
